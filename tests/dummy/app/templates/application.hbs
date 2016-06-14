@@ -1,3 +1,124 @@
-<h2 id="title">Welcome to Ember</h2>
+<header>
 
-{{outlet}}
+  {{#heart-progress progress=(get-state 'progress')}}
+    <div class="logos">
+      <img class="ember" src="ember.png" height=75 alt="ember logo">
+      <div class="plus">+</div>
+      <img class="redux" src="redux.png" height=75 alt="redux logo">
+    </div>
+    <div class="progress">
+      <pre><code>\{{get-state 'progress'}}:</code></pre>{{get-state 'progress'}}
+    </div>
+  {{/heart-progress}}
+
+  <div class="progress-btn-group">
+    <button class="btn dispatch" onclick={{dispatch "LESS"}}>
+      <pre><code>\{{dispatch 'LESS'}}</code></pre>
+    </button>
+    <button class="btn dispatch" onclick={{dispatch "MORE"}}>
+      <pre><code>\{{dispatch 'MORE'}}</code></pre>
+    </button>
+  </div>
+
+  <h1 id="title">Ember Redux Helpers</h1>
+  <h2>A set of Ember Template Helpers for <a href="http://redux.js.org">redux.js</a></h2>
+  <code class="install-cmd">ember install ember-redux-helpers</code>
+
+  <div class="gh-link">
+    <a href="https://github.com/jkusa/ember-redux-helpers">
+      <span> View On Github</span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h3>\{{get-state "state.path"}}</h3>
+    <div class="description">
+      helper to fetch and subscribe to state properties in the redux store
+    </div>
+    <div class="example">
+      <pre><code>
+\{{!-- component.hbs --}}
+\{{progress-bar
+  progress=(get-state 'progress')
+}}
+      </code></pre>
+    </div>
+    <div class="description">
+      Use object paths just like you would with <a class="ember-link" href="http://emberjs.com/api/#method_get"><em>Ember.get</em></a>
+    </div>
+    <div class="example">
+      <pre><code>
+\{{!-- component.hbs --}}
+\{{todo-item
+  todo=(get-state 'todos.firstObject')
+}}
+      </code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h3>\{{dispatch "TYPE" prop=value prop=value}}</h3>
+    <div class="description">
+       closure action helper to dispatch directly to the redux store
+    </div>
+    <div class="example">
+      <pre><code class="hbs">
+\{{!-- component.hbs --}}
+&lt;button
+  onclick=\{{dispatch 'ADD' value=value}}&gt;
+  Click to Add
+&lt;/button&gt;
+      </code></pre>
+      <pre><code class="javascript">
+//reducer.js
+export default (state=0, action) =&gt; {
+
+  if(action.type === 'ADD') {
+    state += action.value;
+  }
+
+  return state;
+};
+      </code></pre>
+    </div>
+    <div class="description">
+      arguments provided while invoking the action can be referenced via the <em>invocationArgs</em> array property
+    </div>
+    <div class="example">
+      <pre><code class="hbs">
+\{{!-- component.hbs --}}
+&lt;input
+ onchange=(dispatch 'UPDATE' field='title')
+&gt;
+      </code></pre>
+      <pre><code class="javascript">
+//reducer.js
+export default (state={}, action) =&gt; {
+
+  if (action.type === 'UPDATE') {
+
+    let { field, invocationArgs } = action;
+    state = Object.assign(state, {
+      //invocaionArgs contains the event obj
+      [field]: invocationArgs[0].target.value
+    });
+
+  }
+
+  return state;
+};
+      </code></pre>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="todo-link">Check out <a href="https://github.com/jkusa/ember-redux-todomvc/">ember-redux-todomvc</a> for more examples</p>
+
+  <div class="profile-link">
+    <a href="https://github.com/jkusa">@jkusa</a>
+  </div>
+</footer>
+

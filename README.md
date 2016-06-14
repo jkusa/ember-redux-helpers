@@ -1,26 +1,85 @@
-# Ember-redux-helpers
+# ember-redux-helpers
 
-This README outlines the details of collaborating on this Ember addon.
+A set of [Ember](http://emberjs.com) Template Helpers for [Redux.JS](http://redux.js.org)
 
-## Installation
+## Demo Page
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+ http://jkusa.github.io/ember-redux-helpers/
 
-## Running
+## Usage
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+### `{{get-state "state.path"}}`
 
-## Running Tests
+Helper to fetch and subscribe to state properties in the redux store
 
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+```hbs
+{!-- component.hbs --}}
+{{progress-bar
+  progress=(get-state 'progress')
+}}
+```
 
-## Building
+Use object paths just like you would with [Ember.get](http://emberjs.com/api/#method_get)
 
-* `ember build`
+```hbs
+{{!-- component.hbs --}}
+{{todo-item
+  todo=(get-state 'todos.firstObject')
+}}
+```
 
-For more information on using ember-cli, visit [http://ember-cli.com/](http://ember-cli.com/).
+### `{{dispatch "TYPE" key=value key=value}}`
+
+Closure action helper to dispatch directly to the redux store
+
+```hs
+{{!-- component.hbs --}}
+<button onclick={{dispatch 'ADD' value=value}}>
+  Click to Add
+</button>
+```
+
+```js
+//reducer.js
+export default (state=0, action) => {
+
+  if(action.type === 'ADD') {
+    state += action.value;
+  }
+
+  return state;
+};
+```
+
+Arguments provided while invoking the action can be referenced via the __invocationArgs__ property array
+
+```hbs
+{{!-- component.hbs --}}
+<input onchange=(dispatch 'UPDATE' field='title')>
+```
+
+```js
+//reducer.js
+export default (state={}, action) => {
+
+  if (action.type === 'UPDATE') {
+
+    let { field, invocationArgs } = action;
+    state = Object.assign(state, {
+      //invocaionArgs contains the event obj
+      [field]: invocationArgs[0].target.value
+    });
+
+  }
+
+  return state;
+};
+```
+
+## Compatibility
+
+This addon will work on Ember versions `1.13.x` and up only, due to use of the new `Helper` implementation.
+
+## Thanks
+
+Thanks to @toranb and @rwjblue who inspired this addon.

@@ -1,7 +1,7 @@
 {
   "name": "ember-redux-helpers",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.1",
+  "description": "A set of Ember Template Helpers for Redux.JS",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,18 +11,21 @@
     "start": "ember server",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/jkusa/ember-redux-helpers.git",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Jon Kilroy <jkusa7@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
     "ember-ajax": "0.7.1",
+    "ember-browserify": "^1.1.9",
     "ember-cli": "2.5.1",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-dependency-checker": "^1.2.0",
+    "ember-cli-font-awesome": "1.5.0",
+    "ember-cli-github-pages": "0.1.0",
     "ember-cli-htmlbars": "^1.0.3",
     "ember-cli-htmlbars-inline-precompile": "^0.3.1",
     "ember-cli-inject-live-reload": "^1.4.0",
@@ -35,17 +38,26 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
+    "ember-progress-bar": "0.0.3",
+    "ember-redux": "^1.4.0",
     "ember-resolver": "^2.0.3",
     "ember-try": "^0.2.2",
-    "loader.js": "^4.0.1"
+    "loader.js": "^4.0.1",
+    "progressbar.js": "^1.0.1",
+    "redux": "^3.4.0",
+    "redux-thunk": "^2.0.1"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-cli",
+    "ember",
+    "redux"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.6"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "http://jkusa.github.io/ember-redux-helpers"
   }
 }
