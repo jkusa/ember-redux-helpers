@@ -1,5 +1,7 @@
 # ember-redux-helpers
 
+[![Build Status](https://travis-ci.org/jkusa/ember-redux-helpers.svg?branch=master)](https://travis-ci.org/jkusa/ember-redux-helpers)
+
 A set of [Ember](http://emberjs.com) Template Helpers for [Redux.JS](http://redux.js.org)
 
 ## Demo Page
