@@ -5,21 +5,36 @@ export default Ember.Helper.extend({
 
   redux: Ember.inject.service('redux'),
 
-  compute([type, ...params], hash) {
+  compute([reduxAction, ...params], hash) {
     let redux = this.get('redux');
 
-    let action = (...invocationArgs) => {
+    let emberAction = (...invocationArgs) => {
       Ember.run.join(() => {
-        redux.dispatch(
-          Object.assign({}, hash, {
-            type,
-            invocationArgs
-          })
-        );
+        let payload = this.buildAction(reduxAction, hash, invocationArgs);
+        redux.dispatch(payload);
       });
     };
 
-    action[ACTION] = true;
-    return action;
+    emberAction[ACTION] = true;
+    return emberAction;
+  },
+
+  buildAction(action, hash, invocationArgs) {
+
+    let actionType = typeof action;
+    switch(actionType) {
+      case 'function':
+        return action(hash, invocationArgs);
+
+      case 'object':
+        return Object.assign({}, hash, invocationArgs);
+
+      case 'string':
+        return Object.assign({}, hash, {
+          type: action,
+          invocationArgs
+        });
+      }
+      Ember.assert("fail");
   }
 });
